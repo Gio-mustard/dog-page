@@ -1,0 +1,35 @@
+{
+    "pet": {
+        "name": "Pikachu",
+        "photos": [
+            "https://i.pinimg.com/736x/dc/ab/b7/dcabb7fbb2f763d680d20a3d228cc6f9.jpg",
+            "https://fotografias-neox.atresmedia.com/clipping/cmsimages01/2015/11/26/CF444504-29E2-4906-BAF6-490E09C1C98E/98.jpg?crop=899,506,x0,y37&width=1900&height=1069&optimize=high&format=webply",
+            "https://cdn.xzone.cz/p/klasicke-plakaty/plakat-pokemon-pikachu/plakat-pokemon-pikachu-146-900w.png",
+            "https://www.emp.ie/dw/image/v2/BBQV_PRD/on/demandware.static/-/Sites-master-emp/default/dw8ca973f7/images/4/6/4/5/464550a.jpg?sfrm=png",
+            "https://4kwallpapers.com/images/wallpapers/pikachu-pokemon-1080x2160-10906.png"
+        ],
+        "properties": [
+            {
+                "title": "15kg",
+                "children": null
+            },
+            {
+                "title": "Medicamentos",
+                "children": "# Muchas cosas uuuuhn\n  * Paracetamol\n* Ibuprofeno\n * Coca zero"
+            },
+            {
+                "title": "Amarillo",
+                "children": null
+            },
+            {
+                "title":"CUIDADO! Tira rempalagos"
+            }
+        ]
+    },
+    "owner": {
+        "name": "Santiago",
+        "phone_number": "123456789",
+        "email": "santiago@example.com",
+        "facebook": "https://www.facebook.com/profile.php?id=100071162208945"
+    }
+}
