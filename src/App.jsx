@@ -23,11 +23,11 @@ const owner_test = {
   email:'XXXXXXXXXXXXXXXXXXXXXXXXXX'
 }
 
-function Owner(name,phone_number,extra_info){
+function Owner(name,phone_number,extra_info,pet){
   this.name = name;
   this.phone_number = phone_number
   this.extra_info = extra_info
-  console.log(extra_info)
+  this.pet = pet
 }
 function Pet(name, photosUrl,properties){
   this.name = name;
@@ -50,22 +50,24 @@ const path_info = "/public/info.json"
 function App() {
   const contact_owner_button_ref = useRef(null);
   const [pet,setPet] = useState(new Pet(pet_test.name,pet_test.photos,pet_test.properties));
-  const [owner,setOwner] = useState(new Owner(owner_test.name,owner_test.phone_number,{}));
+  const [owner,setOwner] = useState(new Owner(owner_test.name,owner_test.phone_number,{},{}));
+  const [data,setData] = useState(null);
   const [hidden_shared_buttons,set_hidden_shared_buttons] = useState(true);
   useEffect(()=>{
-    const handleReaddata = async () => {
-    const data = await getDataFromJsonFile(path_info);
+    getDataFromJsonFile(path_info).then(data=>setData(data));
+  },[])
+  useEffect(()=>{
+    if (data==null) return;
     setPet(new Pet(data.pet.name, data.pet.photos, data.pet.properties));
+  },[data])
+  useEffect(()=>{
+    if (data==null) return;
     const ownerProps = Object.assign({}, data.owner);
     delete ownerProps.name;
     delete ownerProps.phone_number;
-    setOwner(new Owner(data.owner.name, data.owner.phone_number, ownerProps));
-    }
-    handleReaddata();
-  },[])
-  useEffect(()=>{
+    setOwner(new Owner(data.owner.name, data.owner.phone_number, ownerProps,pet));
   
-  },[])
+  },[pet])
   return (
     <Drawer.Root >
       <SocialShareButtons
