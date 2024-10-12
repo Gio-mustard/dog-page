@@ -60,8 +60,8 @@
     font-size: 2.5vh ;
 }
 #owner-contact  div > button{
-    padding: .5vh 1.8vh ;
-    font-size: 1.2vh;
+    /* padding: .5vh 1.8vh ; */
+    /* font-size: 1.2vh; */
 }
 #facebook-button > a{
     text-decoration: none;

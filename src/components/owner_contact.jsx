@@ -3,6 +3,7 @@ import { useInsertionEffect, useRef, useState } from 'react';
 import "/public/css/vaul.css"
 import "/public/css/inputs.css"
 import emailjs from 'emailjs-com';
+import { Modal } from './modal';
 
 function Input({ children, id, label, type, value, onChange, helpText, placeHolder,name,isTextArea = false }) {
   const [isFocused, setIsFocused] = useState(false);
@@ -62,20 +63,28 @@ const template_id = "template_rxxb8cr"
 const user_id = "Pl_uMVkv0aIsadz4b"
 
 
-const sendEmail = (e,form) => {
+const sendEmail = async (e,form) => {
   e.preventDefault();
 
-  emailjs.sendForm(service_id, template_id, form,user_id)
+  const response = await emailjs.sendForm(service_id, template_id, form,user_id)
     .then((result) => {
-        console.log(result.text);
-        alert("Message sent successfully!");
+      return result
     }, (error) => {
-        console.log(error.text);
-        alert("An error occurred. Please try again.");
+    return error;
+    
     });
+    console.log(response)
+if (response.status === 200) {
+  return [false,"Email sent successfully!"];
+  
+} else {
+  console.log(response);
+  return [true,`Error on send email`];
+}
+    
 };
 
-export function OwnerContact({ owner}) {
+export function OwnerContact({owner,onEmailSender}) {
   const phone_button_ref = useRef(null);
   const form_ref = useRef(null);
  
@@ -113,10 +122,21 @@ export function OwnerContact({ owner}) {
           ) :null}
           
 
-          <form ref={form_ref} onSubmit={(e)=>sendEmail(e,form_ref.current)} id='contact-form'>
+          <form ref={form_ref} onSubmit={async(e)=>{
+            const [has_error,message] = await sendEmail(e,form_ref.current);
+            const data_to_sender = {
+              title:has_error?"Error al enviar el mensaje":"Mensaje enviado",
+              message:message,
+              type:has_error?"error":"success"
+            }
+            onEmailSender(
+              data_to_sender
+            )
+            
+            }} id='contact-form'>
             <div>
               <h2>Mensaje directo</h2>
-              <button>Enviar</button>
+              <button className='small'>Enviar</button>
             </div>
             <hr />
             <input type="hidden" name='owner_email' value={owner.extra_info.email}/>

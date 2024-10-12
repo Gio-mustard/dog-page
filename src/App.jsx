@@ -8,6 +8,7 @@ import { ButtonWithIcon } from './components/general.jsx';
 import { ListItems } from './components/general.jsx';
 import { SliderImage } from './components/general.jsx';
 import { SocialShareButtons } from './components/general.jsx';
+import { Modal } from './components/modal.jsx';
 
 const pet_test = {
   photos: ["https://picsum.photos/400/300", "https://picsum.photos/400/200", "https://picsum.photos/400/100", "https://picsum.photos/300/100"],
@@ -53,6 +54,12 @@ function App() {
   const [owner,setOwner] = useState(new Owner(owner_test.name,owner_test.phone_number,{},{}));
   const [data,setData] = useState(null);
   const [hidden_shared_buttons,set_hidden_shared_buttons] = useState(true);
+  const [modal_open,set_modal_open] = useState(false);
+  const [modal_data,set_modal_data] = useState({
+    title:null,
+    message:null,
+    type:null
+  });
   useEffect(()=>{
     getDataFromJsonFile(path_info).then(data=>setData(data));
   },[])
@@ -70,6 +77,11 @@ function App() {
   },[pet])
   return (
     <Drawer.Root >
+      <Modal title={modal_data.title} is_to_error={modal_data.type=='error'}  isOpen={modal_open} onClose={()=>set_modal_open(false)}>
+        <p>
+          {modal_data.message}
+        </p>
+      </Modal>
       <SocialShareButtons
           url={'facebook.com'}
           title={'test page'}
@@ -123,7 +135,11 @@ function App() {
 
         </ButtonWithIcon>
       </section>
-      <OwnerContact owner={owner} />
+      <OwnerContact owner={owner} onEmailSender={(data_to_sender)=>{
+        set_modal_data(data_to_sender)
+        set_modal_open(true)
+        
+        }} />
     </Drawer.Root>
   )
 }

@@ -216,10 +216,16 @@ button {
     font-weight: bold;
     font-size: 1.5vh;
 }
-
+button.small{
+    padding: .5vh 1vh;
+    font-size: 1.2vh;
+}
+button.red{
+    background-color: #F7E2ED;
+    color: #D41B1B;
+}
 button:active {
-    background-color: #E3F0F8;
-    color: #0057D2;
+    opacity: .7;
 }
 
 /* list items */
