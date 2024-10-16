@@ -71,7 +71,9 @@ function App() {
         photos = item['children']
       }
     }
-    setPet(new Pet(data.pet.name, photos, data.pet.properties));
+
+    
+    setPet(new Pet(data.pet.name, photos, data.pet.properties.filter((value,index)=>value['title'] !='photos')));
   },[data])
   useEffect(()=>{
     if (data==null) return;
