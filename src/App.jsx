@@ -45,7 +45,7 @@ async function getDataFromJsonFile(filepath) {
 }
 
 
-const path_info = "/public/info.json"
+const path_info = "./public/info.json"
 
 
 function App() {
