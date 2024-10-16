@@ -65,7 +65,13 @@ function App() {
   },[])
   useEffect(()=>{
     if (data==null) return;
-    setPet(new Pet(data.pet.name, data.pet.photos, data.pet.properties));
+    let photos = []
+    for (let item of data.pet.properties){
+      if (item['title']=='photos'){
+        photos = item['children']
+      }
+    }
+    setPet(new Pet(data.pet.name, photos, data.pet.properties));
   },[data])
   useEffect(()=>{
     if (data==null) return;
