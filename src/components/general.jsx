@@ -24,19 +24,24 @@ function SliderImage({ photos, id, title = 'Slider Images' }) {
     useEffect(() => {
         set_margin_left(-(currentPhotoIndex));
     }, [currentPhotoIndex])
-
     return (
         <div id={id} className='image-container'>
-            <img
+            {photos.length==0 ? (<span>no hay fotos</span>):(
+
+                <img
                 className='image-background'
                 src={photos[currentPhotoIndex]}
                 alt="Pet photo"
-            />
+                />
+            )}
             <div className='images'>
-                <img
+                {photos.length>0?(
+
+                    <img
                     src={photos[currentPhotoIndex]}
                     alt="Pet photo"
-                />
+                    />
+                ):null}
             </div>
             <div className='images-controls'>
                 <div className='images-controls--buttons-container'>
@@ -77,7 +82,7 @@ function ListItems({ items,withoutShadow=false }) {
 
                         {item.children && (
                             <button className='view-button' key={index + 1 * 3}>{openIndex === index ? 'Ocultar' : 'Ver'}
-                            
+
                              </button>
                         )}
 

@@ -32,15 +32,15 @@ function Owner(name,phone_number,email,extra_info,pet){
   this.pet = pet
   this.facebook = null
   if ( this.extra_info.filter(v=>v['title']=='facebook').length > 0){
-    console.log('true')
     this.facebook = this.extra_info.filter(v=>v['title']=='facebook')[0]['children']
     this.extra_info = this.extra_info.filter(v=>v['title']!='facebook')
   }
 }
-function Pet(name, photosUrl,properties){
+function Pet(name, photosUrl,properties,description){
   this.name = name;
   this.photos = photosUrl;
   this.properties = properties
+  this.description = description
 }
 
 
@@ -57,7 +57,7 @@ const path_info = "./public/info.json"
 
 function App() {
   const contact_owner_button_ref = useRef(null);
-  const [pet,setPet] = useState(new Pet(pet_test.name,pet_test.photos,pet_test.properties));
+  const [pet,setPet] = useState(new Pet(pet_test.name,[],pet_test.properties,''));
   const [owner,setOwner] = useState(new Owner(owner_test.name,owner_test.phone_number,owner_test.email,[],{}));
   const [data,setData] = useState(null);
   const [hidden_shared_buttons,set_hidden_shared_buttons] = useState(true);
@@ -80,11 +80,10 @@ function App() {
     }
 
     
-    setPet(new Pet(data.pet.name, photos, data.pet.properties.filter((value,index)=>value['title'] !='photos')));
+    setPet(new Pet(data.pet.name, photos, data.pet.properties.filter((value,index)=>value['title'] !='photos'),data.pet.description));
   },[data])
   useEffect(()=>{
     if (data==null) return;
-    console.log(data.owner)
     setOwner(new Owner(data.owner.name, data.owner.phone_number, data.owner.email,data.owner.extra,pet));
   
   },[pet]);
@@ -103,7 +102,7 @@ function App() {
       <section className='section horizontal' >
         <SliderImage photos={pet.photos} title="Sus fotos" />
         <div className='main-message'>
-          <h3>
+          <h3 id='lost-title'>
             Perdido !
           </h3>
           <div className='message important'>
@@ -125,6 +124,9 @@ function App() {
 
       <section className='section'>
         <h2>Sobre {pet.name}</h2>
+        <p>
+          {pet.description}
+        </p>
         <ListItems items={pet.properties} />
       </section>
       <section className="section">
