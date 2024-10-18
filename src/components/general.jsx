@@ -18,14 +18,71 @@ function ButtonWithIcon({ children, message, color, onClick }) {
 function SliderImage({ photos, id, title = 'Slider Images' }) {
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
     const [margin_left, set_margin_left] = useState(0);
-    const handlePhotoChange = (index) => {
-        setCurrentPhotoIndex(index);
-    };
+    const sensibility = 20;
     useEffect(() => {
         set_margin_left(-(currentPhotoIndex));
     }, [currentPhotoIndex])
+    const [startX, setStartX] = useState(null);
+
+    const handlePhotoChange = (index) => {
+        setCurrentPhotoIndex(index);
+    };
+
+    const handleTouchStart = (e) => {
+        setStartX(e.touches[0].clientX); // Guardar posición inicial del toque
+    };
+
+    const handleTouchEnd = (e) => {
+        const endX = e.changedTouches[0].clientX; // Obtener la posición final del toque
+        if (startX !== null) {
+            if (startX - endX > sensibility) {
+                nextPhoto(); // Deslizar a la izquierda, ir a la siguiente imagen
+            } else if (endX - startX > sensibility) {
+                prevPhoto(); // Deslizar a la derecha, ir a la imagen anterior
+            }
+        }
+        setStartX(null); // Resetear el estado del inicio del toque
+    };
+
+    const handleMouseDown = (e) => {
+        setStartX(e.clientX); // Guardar posición inicial del mouse
+    };
+
+    const handleMouseUp = (e) => {
+        const endX = e.clientX; // Obtener la posición final del mouse
+        if (startX !== null) {
+            if (startX - endX >sensibility) {
+                nextPhoto(); // Deslizar a la izquierda, ir a la siguiente imagen
+            } else if (endX - startX > sensibility) {
+                prevPhoto(); // Deslizar a la derecha, ir a la imagen anterior
+            }
+        }
+        setStartX(null); // Resetear el estado del inicio del arrastre
+    };
+
+    const nextPhoto = () => {
+        setCurrentPhotoIndex((prevIndex) =>
+            prevIndex === photos.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    const prevPhoto = () => {
+        setCurrentPhotoIndex((prevIndex) =>
+            prevIndex === 0 ? photos.length - 1 : prevIndex - 1
+        );
+    };
+
+    useEffect(() => {}, [currentPhotoIndex]);
     return (
-        <div id={id} className='image-container'>
+        <>
+        <div 
+        id={id} 
+        className='image-container'
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        >
             {photos.length==0 ? (<span>no hay fotos</span>):(
 
                 <img
@@ -49,7 +106,7 @@ function SliderImage({ photos, id, title = 'Slider Images' }) {
                     {photos.map((photo, index) => (
                         <input
                             style={index == 0 ? {
-                                marginLeft: `${margin_left}vh`
+                                marginLeft: `${margin_left*1.28}vh`
                             } : {}}
                             type='radio'
                             key={index + 1 * 2}
@@ -63,8 +120,19 @@ function SliderImage({ photos, id, title = 'Slider Images' }) {
                 <b className='images-title'>{title}</b>
             </div>
         </div>
+        <span className="photo-index-count">{`${currentPhotoIndex+1}/${photos.length}`}</span>
+        {photos.length==0 ? (null):(
+
+            <img
+            className='image-background global'
+            src={photos[currentPhotoIndex]}
+            alt="Pet photo"
+            />
+            )}
+        </>
     );
 }
+
 
 function ListItems({ items,withoutShadow=false }) {
     const [openIndex, setOpenIndex] = useState(null); // State to track which item is open

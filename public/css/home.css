@@ -39,11 +39,11 @@ body::after {
     flex-direction: column;
     padding: 2vh;
     gap: 2vh;
+    overflow: hidden;
 }
 #lost-title{
     position: relative;
-    text-align: right;
-    padding-right: 2vh;
+    text-align: center;
 }
 #lost-title::after{
     content:'';
@@ -94,6 +94,7 @@ h2 {
     position: relative;
     overflow: hidden;
     z-index: 1;
+    user-select: none !important;
 }
 
 .image-background {
@@ -101,9 +102,14 @@ h2 {
     width: 100%;
     height: 100%;
     z-index: -1;
-    filter: blur(10px) saturate(6) opacity(.5);
+    filter: blur(50px) saturate(10) opacity(.8);
 }
-
+.image-background.global{
+    filter: blur(250px) saturate(2) opacity(.5);
+}
+.photo-index-count{
+    /* position: absolute; */
+}
 .images {
     height: 100%;
     position: relative;
@@ -121,6 +127,7 @@ h2 {
 .images-controls {
     box-shadow: 0 .5vh .5vh rgba(0, 0, 0, 0.151);
     background-color: #CBCBCB;
+    background-color: #ffffff7a;
     border-radius: 1vh;
     display: flex;
     justify-content: space-between;
@@ -129,7 +136,7 @@ h2 {
 }
 
 .images-controls--buttons-container {
-    background-color: #fff;
+    background-color: #ffffff4b;
     height: 100%;
     border-radius: inherit;
     width: 40%;
@@ -139,6 +146,9 @@ h2 {
     gap: 1vh;
     padding: 0 1vh;
     overflow: hidden;
+    /* position: relative; */
+    backdrop-filter: saturate(10);
+    
 }
 
 .radio-button {
@@ -149,6 +159,7 @@ h2 {
     min-height: 1.5vh;
     transform: scale(.8);
     transition: .5s;
+    opacity: .7;
 
 }
 
@@ -157,12 +168,15 @@ h2 {
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: #CBCBCB;
+    background-color: #cbcbcb;
+    background-color: #161616bb;
+
     border-radius: 2vh;
 }
 
 .radio-button:checked::after {
     background-color: #999999;
+    background-color: #161616;
 }
 
 .radio-button:checked {
@@ -170,7 +184,7 @@ h2 {
 }
 
 .images-title {
-    color: #7F7F83;
+    color: #161616b6;
     font-size: 1.5vh;
     text-align: center;
     width: 60%;
