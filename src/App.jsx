@@ -85,7 +85,7 @@ function App() {
   useEffect(()=>{
     if (data==null) return;
     setOwner(new Owner(data.owner.name, data.owner.phone_number, data.owner.email,data.owner.extra,pet));
-  
+    document.title = `Mascota Perdida :  ${pet.name}`;
   },[pet]);
   return (
     <Drawer.Root >
