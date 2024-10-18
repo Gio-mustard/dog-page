@@ -78,11 +78,15 @@ function SliderImage({ photos, id, title = 'Slider Images' }) {
         <div 
         id={id} 
         className='image-container'
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
         >
+            <div className="drawable"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            >
+
+            </div>
             {photos.length==0 ? (<span>no hay fotos</span>):(
 
                 <img
@@ -120,7 +124,6 @@ function SliderImage({ photos, id, title = 'Slider Images' }) {
                 <b className='images-title'>{title}</b>
             </div>
         </div>
-        <span className="photo-index-count">{`${currentPhotoIndex+1}/${photos.length}`}</span>
         {photos.length==0 ? (null):(
 
             <img
