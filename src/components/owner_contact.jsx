@@ -1,9 +1,10 @@
 import { Drawer } from 'vaul';
-import { useInsertionEffect, useRef, useState } from 'react';
+import { useEffect, useInsertionEffect, useRef, useState } from 'react';
 import "/public/css/vaul.css"
 import "/public/css/inputs.css"
 import emailjs from 'emailjs-com';
 import { Modal } from './modal';
+import { ListItems } from './general';
 
 function Input({ children, id, label, type, value, onChange, helpText, placeHolder,name,isTextArea = false }) {
   const [isFocused, setIsFocused] = useState(false);
@@ -87,16 +88,17 @@ if (response.status === 200) {
 export function OwnerContact({owner,onEmailSender}) {
   const phone_button_ref = useRef(null);
   const form_ref = useRef(null);
- 
+  
   return (
     <>
 
       <Drawer.Portal>
+        {/*  : No es necesario estos class name si no estamos usando tailwind */}
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
         <Drawer.Content id='owner-contact' className="bg-gray-100 flex flex-col rounded-t-[10px] mt-24 h-fit fixed bottom-0 left-0 right-0 outline-none">
           <Drawer.Handle />
           <Drawer.Description>
-            * Informacion de contacto del dueno
+            * Informacion de contacto del owner de {owner.pet.name}
           </Drawer.Description>
           
           <Drawer.Title className="font-medium mb-4 text-gray-900">{owner.name}</Drawer.Title>
@@ -111,15 +113,13 @@ export function OwnerContact({owner,onEmailSender}) {
             {owner.phone_number}
             </a>
           </button>
-          {owner.extra_info.facebook ? (
+          {owner.facebook !== null ? (
             <button id='facebook-button'>
-
-            <a  href={owner.extra_info.facebook}  rel="noopener noreferrer"  target="_blank">
+            <a  href={owner.facebook}  rel="noopener noreferrer"  target="_blank">
                 Facebook
             </a>
-            </button>
-              
-          ) :null}
+        </button>
+          ):"uwu"}
           
 
           <form ref={form_ref} onSubmit={async(e)=>{
@@ -139,9 +139,9 @@ export function OwnerContact({owner,onEmailSender}) {
               <button className='small'>Enviar</button>
             </div>
             <hr />
-            <input type="hidden" name='owner_email' value={owner.extra_info.email}/>
+            <input type="hidden" name='owner_email' value={owner.email}/>
             <input type="hidden" name='pet_name' value={owner.pet.name}/>
-            <Input helpText={"this is a hint text to help user"} placeHolder={"Tu nombre"} name={"finder_name"}>
+            <Input helpText={"Escribe tu nombre para que sea facil para el dueno identificarte"} placeHolder={"Tu nombre"} name={"finder_name"}>
               <span className="material-symbols-rounded">
                 person
               </span>
@@ -152,7 +152,8 @@ export function OwnerContact({owner,onEmailSender}) {
               </span>
             </Input>
           </form>
-
+          <hr />
+          <ListItems withoutShadow items={owner.extra_info}/>
         </Drawer.Content>
       </Drawer.Portal>
     </>

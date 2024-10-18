@@ -24,11 +24,18 @@ const owner_test = {
   email:'XXXXXXXXXXXXXXXXXXXXXXXXXX'
 }
 
-function Owner(name,phone_number,extra_info,pet){
+function Owner(name,phone_number,email,extra_info,pet){
   this.name = name;
   this.phone_number = phone_number
   this.extra_info = extra_info
+  this.email = email
   this.pet = pet
+  this.facebook = null
+  if ( this.extra_info.filter(v=>v['title']=='facebook').length > 0){
+    console.log('true')
+    this.facebook = this.extra_info.filter(v=>v['title']=='facebook')[0]['children']
+    this.extra_info = this.extra_info.filter(v=>v['title']!='facebook')
+  }
 }
 function Pet(name, photosUrl,properties){
   this.name = name;
@@ -51,7 +58,7 @@ const path_info = "./public/info.json"
 function App() {
   const contact_owner_button_ref = useRef(null);
   const [pet,setPet] = useState(new Pet(pet_test.name,pet_test.photos,pet_test.properties));
-  const [owner,setOwner] = useState(new Owner(owner_test.name,owner_test.phone_number,{},{}));
+  const [owner,setOwner] = useState(new Owner(owner_test.name,owner_test.phone_number,owner_test.email,[],{}));
   const [data,setData] = useState(null);
   const [hidden_shared_buttons,set_hidden_shared_buttons] = useState(true);
   const [modal_open,set_modal_open] = useState(false);
@@ -77,12 +84,10 @@ function App() {
   },[data])
   useEffect(()=>{
     if (data==null) return;
-    const ownerProps = Object.assign({}, data.owner);
-    delete ownerProps.name;
-    delete ownerProps.phone_number;
-    setOwner(new Owner(data.owner.name, data.owner.phone_number, ownerProps,pet));
+    console.log(data.owner)
+    setOwner(new Owner(data.owner.name, data.owner.phone_number, data.owner.email,data.owner.extra,pet));
   
-  },[pet])
+  },[pet]);
   return (
     <Drawer.Root >
       <Modal title={modal_data.title} is_to_error={modal_data.type=='error'}  isOpen={modal_open} onClose={()=>set_modal_open(false)}>

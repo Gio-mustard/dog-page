@@ -61,7 +61,7 @@ function SliderImage({ photos, id, title = 'Slider Images' }) {
     );
 }
 
-function ListItems({ items }) {
+function ListItems({ items,withoutShadow=false }) {
     const [openIndex, setOpenIndex] = useState(null); // State to track which item is open
 
     const toggleItem = (index) => {
@@ -69,14 +69,16 @@ function ListItems({ items }) {
     };
 
     return (
-        <ul className='list-elements'>
+        <ul className={`list-elements ${withoutShadow?"without-shadow":''}`} key={108823}>
             {items.map((item, index) => (
                 <>
                     <li key={index} className='list-item' onClick={() => toggleItem(index)} style={{ cursor: 'pointer' }}>
                         {item.title}
 
                         {item.children && (
-                            <button className='view-button' key={index + 1 * 3}>{openIndex === index ? 'Ocultar' : 'Ver'} {">"} </button>
+                            <button className='view-button' key={index + 1 * 3}>{openIndex === index ? 'Ocultar' : 'Ver'}
+                            
+                             </button>
                         )}
 
                     </li>

@@ -237,6 +237,11 @@ button:active {
     box-shadow: 0 0 .5vh rgba(0, 0, 0, 0.151);
     user-select: none;
 }
+.list-elements.without-shadow{
+    box-shadow: none;
+    border: .2vh solid #999999;
+    border-radius: .5vh;
+}
 
 hr {
     width: 100%;
