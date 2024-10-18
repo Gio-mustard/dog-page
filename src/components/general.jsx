@@ -114,12 +114,15 @@ const SocialShareButtons = ({ url, title ,hidden}) => {
         <a href={shareLinks.facebook} target="_blank" rel="noopener noreferrer">
           Share on Facebook
         </a>
+        <hr />
         <a href={shareLinks.twitter} target="_blank" rel="noopener noreferrer">
           Share on Twitter
         </a>
+        <hr />
         <a href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer">
           Share on LinkedIn
         </a>
+        <hr />
         <a href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer">
           Share on WhatsApp
         </a>

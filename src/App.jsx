@@ -95,8 +95,8 @@ function App() {
         </p>
       </Modal>
       <SocialShareButtons
-          url={'facebook.com'}
-          title={'test page'}
+          url={window.location.href}
+          title={`${pet.name} esta perdid@ :( esta es su informacion de contacto, ayudal@ a llegar a su casa...`}
           hidden={hidden_shared_buttons}
           />
       <section className='section horizontal' >
